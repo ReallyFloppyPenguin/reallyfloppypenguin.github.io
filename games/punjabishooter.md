@@ -157,6 +157,31 @@
             }
         });
 
+        // Touch controls
+        let touchStartX = null;
+
+        document.addEventListener('touchstart', (event) => {
+            touchStartX = event.touches[0].clientX;
+        });
+
+        document.addEventListener('touchmove', (event) => {
+            if (touchStartX !== null) {
+                const touchX = event.touches[0].clientX;
+                if (touchX < touchStartX - 50 && player.x > 0) {
+                    player.x -= 5; // Move left
+                } else if (touchX > touchStartX + 50 && player.x < canvas.width - player.width) {
+                    player.x += 5; // Move right
+                }
+            }
+        });
+
+        document.addEventListener('touchend', (event) => {
+            const touchEndX = event.changedTouches[0].clientX;
+            if (touchEndX >= canvas.width / 2) {
+                bullets.push({ x: player.x + player.width / 2 - 5, y: player.y }); // Shoot if touch ended on the right side
+            }
+        });
+
         // Start the game
         gameLoop();
     </script>

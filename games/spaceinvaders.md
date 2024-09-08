@@ -37,6 +37,7 @@
 </head>
 <body>
     <h1>Space Invaders</h1>
+    <button id="startButton">Start Game</button>
     <canvas id="gameCanvas" width="480" height="320"></canvas>
     <script src="./spaceinvaders.js"></script>
 </body>

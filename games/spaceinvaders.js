@@ -127,11 +127,45 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
+// Touch controls
+let touchStartX = null;
+
+document.addEventListener('touchstart', (event) => {
+    touchStartX = event.touches[0].clientX;
+});
+
+document.addEventListener('touchmove', (event) => {
+    if (touchStartX !== null) {
+        const touchX = event.touches[0].clientX;
+        if (touchX < touchStartX - 50 && player.x > 0) {
+            player.x -= player.speed; // Move left
+        } else if (touchX > touchStartX + 50 && player.x < canvas.width - player.width) {
+            player.x += player.speed; // Move right
+        }
+    }
+});
+
+document.addEventListener('touchend', (event) => {
+    const touchEndX = event.changedTouches[0].clientX;
+    if (touchEndX >= canvas.width / 2) {
+        shoot(); // Shoot if touch ended on the right side
+    }
+});
+
 // Start Alien Invaders Game
 function startAlienInvaders() {
     createAliens(); // Create aliens for the game
     canvas.style.display = 'block'; // Show the canvas
     gameLoop(); // Start the game loop
 }
+
+const startButton = document.getElementById('startButton');
+
+startButton.addEventListener('click', () => {
+    createAliens(); // Create aliens for the game
+    canvas.style.display = 'block'; // Show the canvas
+    startButton.style.display = 'none'; // Hide the start button
+    gameLoop(); // Start the game loop
+});
 
 startAlienInvaders();
