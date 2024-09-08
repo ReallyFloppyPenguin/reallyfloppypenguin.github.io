@@ -35,8 +35,10 @@ function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawPlayer();
     drawAliens();
+    drawBullets(); // Draw bullets
     moveAliens();
     updateBullets();
+    checkCollisions();
     requestAnimationFrame(gameLoop);
 }
 
@@ -51,6 +53,14 @@ function drawAliens() {
     ctx.fillStyle = '#FF0000';
     aliens.forEach(alien => {
         ctx.fillRect(alien.x, alien.y, alien.width, alien.height);
+    });
+}
+
+// Draw bullets
+function drawBullets() {
+    ctx.fillStyle = '#FFFF00'; // Color for bullets
+    player.bullets.forEach(bullet => {
+        ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
     });
 }
 
@@ -82,6 +92,19 @@ function updateBullets() {
         if (bullet.y < 0) {
             player.bullets.splice(index, 1); // Remove bullet if it goes off screen
         }
+    });
+}
+
+// Check collisions
+function checkCollisions() {
+    player.bullets.forEach((bullet, bulletIndex) => {
+        aliens.forEach((alien, alienIndex) => {
+            if (bullet.x < alien.x + alien.width && bullet.x + bullet.width > alien.x &&
+                bullet.y < alien.y + alien.height && bullet.y + bullet.height > alien.y) {
+                alien.isHit = true; // Mark alien as hit
+                player.bullets.splice(bulletIndex, 1); // Remove bullet
+            }
+        });
     });
 }
 

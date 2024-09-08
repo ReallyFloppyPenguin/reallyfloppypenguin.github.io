@@ -9,6 +9,6 @@
 </head>
 <body>
     <h1>Hello!</h1>
-    <a href="/funzone">Go to Funzone</a>
+    <a href="/playwhat">Go to Funzone</a>
 </body>
 </html>
