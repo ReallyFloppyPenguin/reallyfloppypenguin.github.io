@@ -19,14 +19,18 @@ let alienSpeed = 1;
 let alienDirection = 1; // 1 for right, -1 for left
 
 // Create aliens
-for (let row = 0; row < alienRows; row++) {
-    for (let col = 0; col < alienCols; col++) {
-        aliens.push({
-            x: col * (alienWidth + 10) + 30,
-            y: row * (alienHeight + 10) + 30,
-            width: alienWidth,
-            height: alienHeight
-        });
+function createAliens() {
+    aliens = []; // Reset aliens
+    for (let row = 0; row < alienRows; row++) {
+        for (let col = 0; col < alienCols; col++) {
+            aliens.push({
+                x: col * (alienWidth + 10) + 30,
+                y: row * (alienHeight + 10) + 30,
+                width: alienWidth,
+                height: alienHeight,
+                isHit: false // Track if the alien is hit
+            });
+        }
     }
 }
 
@@ -35,7 +39,6 @@ function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawPlayer();
     drawAliens();
-    drawBullets(); // Draw bullets
     moveAliens();
     updateBullets();
     checkCollisions();
@@ -52,15 +55,9 @@ function drawPlayer() {
 function drawAliens() {
     ctx.fillStyle = '#FF0000';
     aliens.forEach(alien => {
-        ctx.fillRect(alien.x, alien.y, alien.width, alien.height);
-    });
-}
-
-// Draw bullets
-function drawBullets() {
-    ctx.fillStyle = '#FFFF00'; // Color for bullets
-    player.bullets.forEach(bullet => {
-        ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
+        if (!alien.isHit) {
+            ctx.fillRect(alien.x, alien.y, alien.width, alien.height);
+        }
     });
 }
 
@@ -99,7 +96,7 @@ function updateBullets() {
 function checkCollisions() {
     player.bullets.forEach((bullet, bulletIndex) => {
         aliens.forEach((alien, alienIndex) => {
-            if (bullet.x < alien.x + alien.width && bullet.x + bullet.width > alien.x &&
+            if (!alien.isHit && bullet.x < alien.x + alien.width && bullet.x + bullet.width > alien.x &&
                 bullet.y < alien.y + alien.height && bullet.y + bullet.height > alien.y) {
                 alien.isHit = true; // Mark alien as hit
                 player.bullets.splice(bulletIndex, 1); // Remove bullet
@@ -130,5 +127,11 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
-// Start the game
-gameLoop();
+// Start Alien Invaders Game
+function startAlienInvaders() {
+    createAliens(); // Create aliens for the game
+    canvas.style.display = 'block'; // Show the canvas
+    gameLoop(); // Start the game loop
+}
+
+startAlienInvaders();
