@@ -5,7 +5,7 @@ const month = monthNames[today.getMonth()]; // Get current month
 const dayOfWeek = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'][today.getDay()]; // Get current day of the week
 
 const validPassword = `695 4420 ${month} ${dayOfWeek}`; // Generate password
-
+console.log(validPassword);
 const user = prompt("Enter username:");
 const pass = prompt("Enter password:");
 
