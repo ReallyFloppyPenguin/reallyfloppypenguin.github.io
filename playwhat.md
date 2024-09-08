@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>Select a Game</h1>
-    <a href="/games/spaceinvaders">Space Invaders</a>
-    <a href="/games/punjabishooter">Punjabi Shooter</a>
+    <a href="/games/spaceinvaders.html">Space Invaders</a>
+    <a href="/games/punjabishooter.html">Punjabi Shooter</a>
 </body>
 </html>
