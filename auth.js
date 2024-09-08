@@ -1,10 +1,10 @@
 // Basic authentication
 const today = new Date();
-const dayOfMonth = today.getDate(); // Get current day of the month
-const daysOfWeek = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
-const dayOfWeek = daysOfWeek[today.getDay()]; // Get current day of the week
+const monthNames = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+const month = monthNames[today.getMonth()]; // Get current month
+const dayOfWeek = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'][today.getDay()]; // Get current day of the week
 
-const validPassword = `695 4420 ${dayOfMonth} ${dayOfWeek}`; // Generate password
+const validPassword = `695 4420 ${month} ${dayOfWeek}`; // Generate password
 
 const user = prompt("Enter username:");
 const pass = prompt("Enter password:");
