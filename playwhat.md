@@ -1,4 +1,3 @@
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,7 +7,9 @@
 </head>
 <body>
     <h1>Select a Game</h1>
-    <a href="/games/spaceinvaders.html">Space Invaders</a>
-    <a href="/games/punjabishooter.html">Punjabi Shooter</a>
+    <div class="game-links">
+        <a href="/games/spaceinvaders.html">Space Invaders</a>
+        <a href="/games/punjabishooter.html">Punjabi Shooter</a>
+    </div>
 </body>
 </html>
