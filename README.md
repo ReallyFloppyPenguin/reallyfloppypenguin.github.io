@@ -8,6 +8,8 @@
 </head>
 <body>
     <h1>Hello!</h1>
-    <a href="/playwhat">Go to Games</a>
+    <script>
+        console.log("Hi!");
+    </script>
 </body>
 </html>
