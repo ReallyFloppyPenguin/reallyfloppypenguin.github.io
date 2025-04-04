@@ -8,8 +8,6 @@
 </head>
 <body>
     <h1>Hello!</h1>
-    <script>
-        console.log("Hi!");
-    </script>
+   <button><a href="/index.html">GAMEZ<a/><button/>
 </body>
 </html>
