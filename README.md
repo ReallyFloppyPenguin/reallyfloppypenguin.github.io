@@ -35,14 +35,9 @@ reallyfloppypenguin.github.io/
 ├── blog.html           # Blog listing page
 ├── about.html          # About page
 ├── style.css           # Main stylesheet
-├── script.js           # JavaScript functionality
 ├── blog/               # Blog posts directory
 │   └── openai_fake_benchmark.html
-├── games/              # Legacy games (preserved)
-│   ├── spaceinvaders.js
-│   ├── spaceinvaders.md
-│   └── punjabishooter.md
-└── auth.js             # Authentication utilities
+
 ```
 
 ## 🎨 Design Philosophy

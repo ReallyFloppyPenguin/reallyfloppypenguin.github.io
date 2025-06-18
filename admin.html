@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Post Editor - Gurvaah's Blog</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .admin-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 100px 20px 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            min-height: calc(100vh - 140px);
+        }
+
+        .editor-panel, .preview-panel {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .panel-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #1e293b;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #374151;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        .form-group textarea {
+            min-height: 300px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-right: 1rem;
+        }
+
+        .btn:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-secondary {
+            background: #64748b;
+        }
+
+        .btn-secondary:hover {
+            background: #475569;
+        }
+
+        .btn-success {
+            background: #059669;
+        }
+
+        .btn-success:hover {
+            background: #047857;
+        }
+
+        .preview-content {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            min-height: 400px;
+            background: #fafafa;
+        }
+
+        .preview-content h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1e293b;
+        }
+
+        .preview-content h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem 0;
+            color: #1e293b;
+        }
+
+        .preview-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.5rem 0;
+            color: #1e293b;
+        }
+
+        .preview-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #374151;
+            margin-bottom: 1.5rem;
+        }
+
+        .preview-content blockquote {
+            background: #f8fafc;
+            border-left: 4px solid #2563eb;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            color: #64748b;
+        }
+
+        .preview-content ul, .preview-content ol {
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+
+        .preview-content li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        .preview-content code {
+            background: #f1f5f9;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9rem;
+        }
+
+        .preview-content pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .preview-content pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+
+        .code-output {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9rem;
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 1rem;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .success-message {
+            background: #d1fae5;
+            color: #065f46;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .markdown-help {
+            background: #f8fafc;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+
+        .markdown-help h4 {
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+
+        .markdown-help code {
+            background: #e2e8f0;
+            padding: 0.1rem 0.3rem;
+            border-radius: 3px;
+        }
+
+        @media (max-width: 768px) {
+            .admin-container {
+                grid-template-columns: 1fr;
+                padding: 100px 15px 40px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <a href="/" class="nav-logo">Gurvaah's Blog</a>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="/" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/blog.html" class="nav-link">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/about.html" class="nav-link">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/admin.html" class="nav-link active">Editor</a>
+                    </li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="admin-container">
+            <!-- Editor Panel -->
+            <div class="editor-panel">
+                <h2 class="panel-title">📝 Create New Blog Post</h2>
+                
+                <form id="postForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="postTitle">Post Title</label>
+                            <input type="text" id="postTitle" name="title" placeholder="Enter your blog post title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="postCategory">Category</label>
+                            <select id="postCategory" name="category" required>
+                                <option value="">Select Category</option>
+                                <option value="AI Analysis">AI Analysis</option>
+                                <option value="Technology">Technology</option>
+                                <option value="Opinion">Opinion</option>
+                                <option value="Tutorial">Tutorial</option>
+                                <option value="News">News</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="postSlug">URL Slug</label>
+                            <input type="text" id="postSlug" name="slug" placeholder="url-friendly-title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="postDate">Publish Date</label>
+                            <input type="date" id="postDate" name="date" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="postExcerpt">Excerpt/Summary</label>
+                        <textarea id="postExcerpt" name="excerpt" rows="3" placeholder="Brief description of your post (used in previews and SEO)"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="postContent">Content (Markdown)</label>
+                        <div class="markdown-help">
+                            <h4>Markdown Quick Reference:</h4>
+                            <code># Heading 1</code> | <code>## Heading 2</code> | <code>**bold**</code> | <code>*italic*</code> | <code>`code`</code><br>
+                            <code>> blockquote</code> | <code>- list item</code> | <code>[link](url)</code> | <code>```code block```</code>
+                        </div>
+                        <textarea id="postContent" name="content" placeholder="Write your blog post content here using Markdown..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="button" class="btn" onclick="generatePreview()">📖 Preview Post</button>
+                        <button type="button" class="btn btn-success" onclick="generateHTML()">🚀 Generate HTML</button>
+                        <button type="button" class="btn btn-secondary" onclick="clearForm()">🗑️ Clear Form</button>
+                    </div>
+                </form>
+
+                <div class="success-message" id="successMessage">
+                    ✅ HTML generated successfully! Copy the code from the right panel and save it as a new file.
+                </div>
+            </div>
+
+            <!-- Preview Panel -->
+            <div class="preview-panel">
+                <h2 class="panel-title">👀 Live Preview</h2>
+                <div class="preview-content" id="previewContent">
+                    <p style="color: #94a3b8; text-align: center; padding: 2rem;">
+                        Fill out the form and click "Preview Post" to see how your blog post will look.
+                    </p>
+                </div>
+
+                <div id="htmlOutput" style="display: none;">
+                    <h3 style="margin-top: 2rem; margin-bottom: 1rem; color: #1e293b;">Generated HTML:</h3>
+                    <button class="btn btn-secondary" onclick="copyHTML()">📋 Copy HTML</button>
+                    <div class="code-output" id="generatedHTML"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2025 Gurvaah's Blog. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="/blog.html">Blog</a>
+                    <a href="/about.html">About</a>
+                    <a href="https://github.com/reallyfloppypenguin" target="_blank">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Auto-generate slug from title
+        document.getElementById('postTitle').addEventListener('input', function() {
+            const title = this.value.toLowerCase()
+                .replace(/[^a-z0-9\s]/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/^-+|-+$/g, '');
+            document.getElementById('postSlug').value = title;
+        });
+
+        // Set today's date as default
+        document.getElementById('postDate').value = new Date().toISOString().split('T')[0];
+
+        // Simple markdown to HTML converter
+        function markdownToHTML(markdown) {
+            let html = markdown
+                // Headers
+                .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+                .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+                .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+                
+                // Bold and italic
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                
+                // Code blocks
+                .replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>')
+                .replace(/`(.*?)`/g, '<code>$1</code>')
+                
+                // Links
+                .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>')
+                
+                // Blockquotes
+                .replace(/^> (.*$)/gim, '<blockquote>$1</blockquote>')
+                
+                // Lists
+                .replace(/^\- (.*$)/gim, '<li>$1</li>')
+                
+                // Paragraphs
+                .replace(/\n\n/g, '</p><p>')
+                .replace(/^(?!<[h|l|b|p])(.+)$/gm, '<p>$1</p>')
+                
+                // Clean up
+                .replace(/<li>/g, '<ul><li>')
+                .replace(/<\/li>(?![\s]*<li>)/g, '</li></ul>')
+                .replace(/<\/ul>[\s]*<ul>/g, '');
+
+            return html;
+        }
+
+        function generatePreview() {
+            const title = document.getElementById('postTitle').value;
+            const content = document.getElementById('postContent').value;
+            const category = document.getElementById('postCategory').value;
+            const date = document.getElementById('postDate').value;
+
+            const htmlContent = markdownToHTML(content);
+            
+            const previewHTML = `
+                <div style="margin-bottom: 2rem;">
+                    <span style="background: #2563eb; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.875rem; font-weight: 500;">${category}</span>
+                    <span style="color: #64748b; margin-left: 1rem;">${new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}</span>
+                </div>
+                <h1>${title}</h1>
+                ${htmlContent}
+            `;
+
+            document.getElementById('previewContent').innerHTML = previewHTML;
+        }
+
+        function generateHTML() {
+            const formData = {
+                title: document.getElementById('postTitle').value,
+                slug: document.getElementById('postSlug').value,
+                category: document.getElementById('postCategory').value,
+                date: document.getElementById('postDate').value,
+                excerpt: document.getElementById('postExcerpt').value,
+                content: document.getElementById('postContent').value
+            };
+
+            if (!formData.title || !formData.slug || !formData.category || !formData.content) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            const htmlContent = markdownToHTML(formData.content);
+            const dateFormatted = new Date(formData.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+
+            const fullHTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${formData.title} - Gurvaah's Blog</title>
+    <meta name="description" content="${formData.excerpt}">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .post-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 140px 20px 80px;
+            position: relative;
+        }
+        
+        .post-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.3);
+        }
+        
+        .post-header .container {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .post-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 80px 20px;
+            background: white;
+        }
+        
+        .post-content h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1e293b;
+        }
+        
+        .post-content h2 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin: 2.5rem 0 1rem 0;
+            color: #1e293b;
+        }
+        
+        .post-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem 0;
+            color: #1e293b;
+        }
+        
+        .post-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #374151;
+            margin-bottom: 1.5rem;
+        }
+        
+        .post-content blockquote {
+            background: #f8fafc;
+            border-left: 4px solid #2563eb;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: #64748b;
+        }
+        
+        .post-content ul, .post-content ol {
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+        }
+        
+        .post-content li {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+        
+        .post-content code {
+            background: #f1f5f9;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .back-to-blog {
+            display: inline-block;
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            transition: color 0.3s ease;
+        }
+        
+        .back-to-blog:hover {
+            color: #1d4ed8;
+        }
+        
+        .back-to-blog::before {
+            content: '← ';
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <a href="/" class="nav-logo">Gurvaah's Blog</a>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="/" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/blog.html" class="nav-link">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/about.html" class="nav-link">About</a>
+                    </li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="post-header">
+            <div class="container">
+                <div class="post-meta" style="margin-bottom: 2rem;">
+                    <span class="post-category" style="background: rgba(255,255,255,0.2); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.875rem; font-weight: 500;">${formData.category}</span>
+                    <span style="color: rgba(255,255,255,0.8); margin-left: 1rem;">${dateFormatted}</span>
+                    <span class="reading-time" style="color: rgba(255,255,255,0.8); margin-left: 1rem;">5 min read</span>
+                </div>
+                <h1 style="font-size: 3rem; font-weight: 700; margin-bottom: 1rem; line-height: 1.2;">${formData.title}</h1>
+                <p style="font-size: 1.2rem; opacity: 0.9; line-height: 1.6;">${formData.excerpt}</p>
+            </div>
+        </section>
+
+        <article class="post-content">
+            <a href="/blog.html" class="back-to-blog">Back to Blog</a>
+            
+            ${htmlContent}
+
+            <div style="border-top: 2px solid #e2e8f0; margin: 3rem 0 2rem 0; padding-top: 2rem;">
+                <p style="font-style: italic; color: #64748b;">
+                    <strong>Note:</strong> This post reflects my personal thoughts and observations. 
+                    I'd love to hear your thoughts on this topic—feel free to reach out through my 
+                    <a href="https://github.com/reallyfloppypenguin" target="_blank" style="color: #2563eb;">GitHub</a>.
+                </p>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2025 Gurvaah's Blog. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="/blog.html">Blog</a>
+                    <a href="/about.html">About</a>
+                    <a href="https://github.com/reallyfloppypenguin" target="_blank">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+</body>
+</html>`;
+
+            document.getElementById('generatedHTML').textContent = fullHTML;
+            document.getElementById('htmlOutput').style.display = 'block';
+            document.getElementById('successMessage').style.display = 'block';
+
+            // Also generate instructions
+            console.log(`
+🚀 DEPLOYMENT INSTRUCTIONS:
+
+1. Copy the generated HTML code
+2. Create a new file: blog/${formData.slug}.html
+3. Paste the HTML code into the file
+4. Update blog.html to include this new post
+5. Commit and push to GitHub
+
+💡 TIP: Save this as blog/${formData.slug}.html
+            `);
+        }
+
+        function copyHTML() {
+            const htmlContent = document.getElementById('generatedHTML').textContent;
+            navigator.clipboard.writeText(htmlContent).then(() => {
+                alert('HTML copied to clipboard! 📋');
+            });
+        }
+
+        function clearForm() {
+            if (confirm('Are you sure you want to clear the form? This will delete all your content.')) {
+                document.getElementById('postForm').reset();
+                document.getElementById('postDate').value = new Date().toISOString().split('T')[0];
+                document.getElementById('previewContent').innerHTML = '<p style="color: #94a3b8; text-align: center; padding: 2rem;">Fill out the form and click "Preview Post" to see how your blog post will look.</p>';
+                document.getElementById('htmlOutput').style.display = 'none';
+                document.getElementById('successMessage').style.display = 'none';
+            }
+        }
+
+        // Auto-save to localStorage
+        const formInputs = ['postTitle', 'postCategory', 'postSlug', 'postDate', 'postExcerpt', 'postContent'];
+        
+        formInputs.forEach(inputId => {
+            const input = document.getElementById(inputId);
+            
+            // Load saved content
+            const saved = localStorage.getItem(`blog_editor_${inputId}`);
+            if (saved) {
+                input.value = saved;
+            }
+            
+            // Save on input
+            input.addEventListener('input', () => {
+                localStorage.setItem(`blog_editor_${inputId}`, input.value);
+            });
+        });
+    </script>
+</body>
+</html>
