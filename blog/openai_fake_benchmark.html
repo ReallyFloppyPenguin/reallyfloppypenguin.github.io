@@ -2,18 +2,296 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>B/AI - OpenAI on fake benchmarks, will it happen?</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenAI on fake benchmark results, will it happen? - Gurvaah's Blog</title>
+    <meta name="description" content="Exploring the potential for AI companies to game benchmarks and what this means for the industry">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .post-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 140px 20px 80px;
+            position: relative;
+        }
+        
+        .post-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.3);
+        }
+        
+        .post-header .container {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .post-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 80px 20px;
+            background: white;
+        }
+        
+        .post-content h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1e293b;
+        }
+        
+        .post-content h2 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin: 2.5rem 0 1rem 0;
+            color: #1e293b;
+        }
+        
+        .post-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem 0;
+            color: #1e293b;
+        }
+        
+        .post-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #374151;
+            margin-bottom: 1.5rem;
+        }
+        
+        .post-content blockquote {
+            background: #f8fafc;
+            border-left: 4px solid #2563eb;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: #64748b;
+        }
+        
+        .post-content ul, .post-content ol {
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+        }
+        
+        .post-content li {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+        
+        .post-content code {
+            background: #f1f5f9;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .back-to-blog {
+            display: inline-block;
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            transition: color 0.3s ease;
+        }
+        
+        .back-to-blog:hover {
+            color: #1d4ed8;
+        }
+        
+        .back-to-blog::before {
+            content: '← ';
+        }
+    </style>
 </head>
 <body>
-    <h1>OpenAI on fake benchmarks, will it happen?</h1>
-    <p>
-      I was thinking, if all of these benchmarks are open-source, can't any old company train 
-      their AI/LLM/LLaMA on the answers, and then just like that, they have a model that scores 99% on the benchmarks, right?
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <a href="/" class="nav-logo">Gurvaah's Blog</a>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="/" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/blog.html" class="nav-link">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/about.html" class="nav-link">About</a>
+                    </li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
 
-      ---
+    <main>
+        <section class="post-header">
+            <div class="container">
+                <div class="post-meta" style="margin-bottom: 2rem;">
+                    <span class="post-category" style="background: rgba(255,255,255,0.2); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.875rem; font-weight: 500;">AI Analysis</span>
+                    <span style="color: rgba(255,255,255,0.8); margin-left: 1rem;">December 2024</span>
+                    <span class="reading-time" style="color: rgba(255,255,255,0.8); margin-left: 1rem;">3 min read</span>
+                </div>
+                <h1 style="font-size: 3rem; font-weight: 700; margin-bottom: 1rem; line-height: 1.2;">OpenAI on fake benchmark results, will it happen?</h1>
+                <p style="font-size: 1.2rem; opacity: 0.9; line-height: 1.6;">Exploring the potential for AI companies to game benchmarks and what this means for the industry</p>
+            </div>
+        </section>
 
-      
-    </p>
+        <article class="post-content">
+            <a href="/blog.html" class="back-to-blog">Back to Blog</a>
+            
+            <p>
+                I was thinking, if all of these benchmarks are open-source, can't any old company train 
+                their AI/LLM on the answers, and then just like that, they have a model that scores 99% on the benchmarks, right?
+            </p>
+            
+            <p>
+                This question has been nagging at me as I watch the AI industry's obsession with benchmark scores. 
+                Companies are constantly announcing new models with improved performance on standardized tests like 
+                GLUE, SuperGLUE, MMLU, and others. But what happens when these benchmarks become the primary metric 
+                for success? Do we risk creating a system where optimization for tests replaces genuine capability?
+            </p>
+
+            <h2>The Benchmark Gaming Problem</h2>
+            
+            <p>
+                The scenario I'm imagining isn't far-fetched. If a company has access to benchmark datasets and 
+                their answers, they could theoretically train their model specifically to excel on these tests. 
+                This would be similar to teaching to the test in education—you might get high scores, but you're 
+                not necessarily developing real understanding or capability.
+            </p>
+
+            <blockquote>
+                "When a measure becomes a target, it ceases to be a good measure." - Goodhart's Law
+            </blockquote>
+
+            <p>
+                Goodhart's Law perfectly captures this dilemma. The moment benchmark scores become the primary 
+                goal rather than a way to measure genuine AI capability, their value as meaningful assessments 
+                begins to deteriorate.
+            </p>
+
+            <h2>Why This Matters for AI Development</h2>
+
+            <p>
+                The implications of benchmark gaming extend far beyond inflated test scores. If companies start 
+                optimizing primarily for benchmarks rather than real-world performance, we might see:
+            </p>
+
+            <ul>
+                <li><strong>Misleading Progress Reports:</strong> Artificial improvements that don't translate to actual capability gains</li>
+                <li><strong>Resource Misallocation:</strong> Research efforts focused on gaming tests rather than solving real problems</li>
+                <li><strong>Consumer Confusion:</strong> Users expecting capabilities that don't match the benchmark scores</li>
+                <li><strong>Stagnant Innovation:</strong> Less incentive to develop truly novel approaches if test optimization is easier</li>
+            </ul>
+
+            <h2>The OpenAI Question</h2>
+
+            <p>
+                So, will OpenAI—or any major AI company—succumb to this temptation? The financial and competitive 
+                pressures are certainly there. Investors want to see measurable progress, competitors are racing 
+                for benchmark supremacy, and marketing teams love concrete numbers to promote.
+            </p>
+
+            <p>
+                However, there are several factors that might prevent this:
+            </p>
+
+            <h3>Reputation and Long-term Thinking</h3>
+            <p>
+                Companies like OpenAI have built their reputation on advancing the state of AI. Getting caught 
+                benchmark gaming would be devastating to their credibility and could undermine trust in their 
+                other claims about AI safety and capability.
+            </p>
+
+            <h3>Multiple Evaluation Methods</h3>
+            <p>
+                Serious AI researchers understand the limitations of any single benchmark. Companies that want 
+                to maintain credibility typically evaluate their models across multiple dimensions, including 
+                novel tasks that weren't part of training.
+            </p>
+
+            <h3>Real-world Applications</h3>
+            <p>
+                Ultimately, AI models need to perform well in actual applications. A model optimized only for 
+                benchmarks would likely fail in real deployment scenarios, quickly exposing the deception.
+            </p>
+
+            <h2>Moving Beyond Benchmarks</h2>
+
+            <p>
+                The AI community is beginning to recognize these limitations. We're seeing more emphasis on:
+            </p>
+
+            <ul>
+                <li>Dynamic benchmarks that evolve over time</li>
+                <li>Human evaluation alongside automated metrics</li>
+                <li>Task-specific evaluations for intended use cases</li>
+                <li>Red team testing and adversarial evaluation</li>
+            </ul>
+
+            <h2>The Verdict</h2>
+
+            <p>
+                Will we see benchmark gaming? Almost certainly—some companies probably already do it to some degree. 
+                The more interesting question is whether the AI community will adapt quickly enough to maintain 
+                meaningful evaluation standards.
+            </p>
+
+            <p>
+                The companies that will thrive in the long term are those that focus on building genuinely capable 
+                systems rather than those optimized for test performance. As the field matures, I expect we'll see 
+                more sophisticated evaluation methods that are harder to game and more reflective of real-world performance.
+            </p>
+
+            <p>
+                What do you think? Have you noticed any suspicious benchmark scores that seem too good to be true? 
+                The conversation around AI evaluation is just beginning, and it's one that will shape the future 
+                of the field.
+            </p>
+
+            <div style="border-top: 2px solid #e2e8f0; margin: 3rem 0 2rem 0; padding-top: 2rem;">
+                <p style="font-style: italic; color: #64748b;">
+                    <strong>Note:</strong> This post reflects my personal thoughts and observations about AI benchmarking. 
+                    The AI field moves quickly, and practices around evaluation continue to evolve. I'd love to hear 
+                    your thoughts on this topic—feel free to reach out through my 
+                    <a href="https://github.com/reallyfloppypenguin" target="_blank" style="color: #2563eb;">GitHub</a>.
+                </p>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2025 Gurvaah's Blog. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="/blog.html">Blog</a>
+                    <a href="/about.html">About</a>
+                    <a href="https://github.com/reallyfloppypenguin" target="_blank">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
 </body>
 </html>

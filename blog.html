@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Gurvaah's Blog</title>
+    <meta name="description" content="Browse all blog posts about AI, technology, and innovation">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <a href="/" class="nav-logo">Gurvaah's Blog</a>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="/" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/blog.html" class="nav-link active">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/about.html" class="nav-link">About</a>
+                    </li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="blog-header">
+            <div class="container">
+                <h1 class="page-title">Blog Posts</h1>
+                <p class="page-subtitle">Thoughts on AI, technology, and the future</p>
+            </div>
+        </section>
+
+        <section class="blog-content">
+            <div class="container">
+                <!-- Search and Filter -->
+                <div class="blog-controls">
+                    <div class="search-container">
+                        <input type="text" class="blog-search" placeholder="Search posts...">
+                        <span class="search-icon">🔍</span>
+                    </div>
+                    <div class="category-filters">
+                        <button class="category-filter active" data-category="all">All</button>
+                        <button class="category-filter" data-category="ai analysis">AI Analysis</button>
+                        <button class="category-filter" data-category="technology">Technology</button>
+                        <button class="category-filter" data-category="opinion">Opinion</button>
+                    </div>
+                </div>
+
+                <!-- Blog Posts Grid -->
+                <div class="blog-posts">
+                    <article class="post-card">
+                        <div class="post-content">
+                            <div class="post-meta">
+                                <span class="post-category">AI Analysis</span>
+                                <span class="post-date">December 2024</span>
+                                <span class="reading-time">3 min read</span>
+                            </div>
+                            <h2 class="post-title">
+                                <a href="/blog/openai_fake_benchmark.html">OpenAI on fake benchmark results, will it happen?</a>
+                            </h2>
+                            <p class="post-excerpt">
+                                I was thinking, if all of these benchmarks are open-source, can't any old company train 
+                                their AI/LLM on the answers, and then just like that, they have a model that scores 99% on the benchmarks? 
+                                This raises important questions about the reliability of current AI evaluation methods...
+                            </p>
+                            <a href="/blog/openai_fake_benchmark.html" class="read-more">Read Full Post →</a>
+                        </div>
+                    </article>
+
+                    <!-- Placeholder posts for future content -->
+                    <article class="post-card">
+                        <div class="post-content">
+                            <div class="post-meta">
+                                <span class="post-category">Technology</span>
+                                <span class="post-date">Coming Soon</span>
+                                <span class="reading-time">5 min read</span>
+                            </div>
+                            <h2 class="post-title">
+                                <a href="#">The Future of AI Development</a>
+                            </h2>
+                            <p class="post-excerpt">
+                                An in-depth look at where AI development is heading and what to expect in the coming years. 
+                                From breakthrough technologies to ethical considerations, exploring the landscape ahead...
+                            </p>
+                            <a href="#" class="read-more coming-soon">Coming Soon</a>
+                        </div>
+                    </article>
+
+                    <article class="post-card">
+                        <div class="post-content">
+                            <div class="post-meta">
+                                <span class="post-category">Opinion</span>
+                                <span class="post-date">Coming Soon</span>
+                                <span class="reading-time">7 min read</span>
+                            </div>
+                            <h2 class="post-title">
+                                <a href="#">Ethics in AI: Beyond the Hype</a>
+                            </h2>
+                            <p class="post-excerpt">
+                                Moving past buzzwords to examine real ethical considerations in AI development and deployment. 
+                                What does responsible AI actually look like in practice?
+                            </p>
+                            <a href="#" class="read-more coming-soon">Coming Soon</a>
+                        </div>
+                    </article>
+
+                    <article class="post-card">
+                        <div class="post-content">
+                            <div class="post-meta">
+                                <span class="post-category">Technology</span>
+                                <span class="post-date">Coming Soon</span>
+                                <span class="reading-time">4 min read</span>
+                            </div>
+                            <h2 class="post-title">
+                                <a href="#">Machine Learning in Production</a>
+                            </h2>
+                            <p class="post-excerpt">
+                                Practical insights from deploying ML models in real-world applications. 
+                                Lessons learned, common pitfalls, and best practices for success...
+                            </p>
+                            <a href="#" class="read-more coming-soon">Coming Soon</a>
+                        </div>
+                    </article>
+
+                    <article class="post-card">
+                        <div class="post-content">
+                            <div class="post-meta">
+                                <span class="post-category">AI Analysis</span>
+                                <span class="post-date">Coming Soon</span>
+                                <span class="reading-time">6 min read</span>
+                            </div>
+                            <h2 class="post-title">
+                                <a href="#">LLMs vs Traditional NLP: A Comparison</a>
+                            </h2>
+                            <p class="post-excerpt">
+                                Breaking down the differences between large language models and traditional NLP approaches. 
+                                When to use what, and understanding the trade-offs involved...
+                            </p>
+                            <a href="#" class="read-more coming-soon">Coming Soon</a>
+                        </div>
+                    </article>
+
+                    <article class="post-card">
+                        <div class="post-content">
+                            <div class="post-meta">
+                                <span class="post-category">Opinion</span>
+                                <span class="post-date">Coming Soon</span>
+                                <span class="post-date">4 min read</span>
+                            </div>
+                            <h2 class="post-title">
+                                <a href="#">Open Source AI: Community vs. Corporate</a>
+                            </h2>
+                            <p class="post-excerpt">
+                                Examining the tension between open source AI development and corporate interests. 
+                                What does the future hold for community-driven AI innovation?
+                            </p>
+                            <a href="#" class="read-more coming-soon">Coming Soon</a>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Newsletter Signup -->
+                <section class="newsletter-signup">
+                    <div class="newsletter-content">
+                        <h3>Stay Updated</h3>
+                        <p>Get notified when I publish new posts about AI and technology.</p>
+                        <form class="newsletter-form">
+                            <input type="email" placeholder="Enter your email" required>
+                            <button type="submit">Subscribe</button>
+                        </form>
+                        <p class="newsletter-note">No spam, unsubscribe anytime.</p>
+                    </div>
+                </section>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2025 Gurvaah's Blog. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="/blog.html">Blog</a>
+                    <a href="/about.html">About</a>
+                    <a href="https://github.com/reallyfloppypenguin" target="_blank">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html> 

@@ -1011,3 +1011,238 @@ gameRunning = true; // Make sure flag is true initially
 animationFrameId = requestAnimationFrame(gameLoop);
 
 console.log("Pac-Man game running with updated Ghost AI");
+
+// Mobile Navigation Toggle
+document.addEventListener('DOMContentLoaded', function() {
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
+
+    if (hamburger && navMenu) {
+        hamburger.addEventListener('click', function() {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+        }));
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const isClickInsideNav = navMenu.contains(event.target) || hamburger.contains(event.target);
+            
+            if (!isClickInsideNav && navMenu.classList.contains('active')) {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
+    }
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // Header scroll effect
+    const header = document.querySelector('.header');
+    if (header) {
+        let lastScrollY = window.scrollY;
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+            
+            lastScrollY = window.scrollY;
+        });
+    }
+
+    // Reading time calculator for blog posts
+    function calculateReadingTime() {
+        const content = document.querySelector('.post-content, .blog-content');
+        if (content) {
+            const text = content.textContent || content.innerText || '';
+            const wordsPerMinute = 200;
+            const words = text.trim().split(/\s+/).length;
+            const minutes = Math.ceil(words / wordsPerMinute);
+            
+            const readingTimeElement = document.querySelector('.reading-time');
+            if (readingTimeElement) {
+                readingTimeElement.textContent = `${minutes} min read`;
+            }
+        }
+    }
+
+    // Initialize reading time calculation
+    calculateReadingTime();
+
+    // Add loading animation for external links
+    document.querySelectorAll('a[href^="http"]').forEach(link => {
+        link.addEventListener('click', function() {
+            // Add a small loading indicator
+            this.style.opacity = '0.7';
+            setTimeout(() => {
+                this.style.opacity = '1';
+            }, 1000);
+        });
+    });
+
+    // Progressive enhancement for form submissions (if any)
+    const forms = document.querySelectorAll('form');
+    forms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+            const submitButton = form.querySelector('button[type="submit"], input[type="submit"]');
+            if (submitButton) {
+                submitButton.disabled = true;
+                submitButton.textContent = 'Submitting...';
+                
+                // Re-enable after a delay (this would normally be handled by actual form processing)
+                setTimeout(() => {
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'Submit';
+                }, 3000);
+            }
+        });
+    });
+
+    // Blog post filtering and search (for blog listing page)
+    const searchInput = document.querySelector('.blog-search');
+    const categoryFilters = document.querySelectorAll('.category-filter');
+    const postCards = document.querySelectorAll('.post-card');
+
+    if (searchInput && postCards.length > 0) {
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            filterPosts(searchTerm);
+        });
+    }
+
+    if (categoryFilters.length > 0) {
+        categoryFilters.forEach(filter => {
+            filter.addEventListener('click', function() {
+                const category = this.dataset.category;
+                
+                // Update active state
+                categoryFilters.forEach(f => f.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Filter posts
+                filterPostsByCategory(category);
+            });
+        });
+    }
+
+    function filterPosts(searchTerm = '') {
+        postCards.forEach(card => {
+            const title = card.querySelector('.post-title').textContent.toLowerCase();
+            const excerpt = card.querySelector('.post-excerpt').textContent.toLowerCase();
+            const category = card.querySelector('.post-category').textContent.toLowerCase();
+            
+            const matchesSearch = title.includes(searchTerm) || 
+                                excerpt.includes(searchTerm) || 
+                                category.includes(searchTerm);
+            
+            if (matchesSearch) {
+                card.style.display = 'block';
+                card.style.animation = 'fadeIn 0.3s ease-in';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    function filterPostsByCategory(category) {
+        postCards.forEach(card => {
+            const postCategory = card.querySelector('.post-category').textContent.toLowerCase();
+            
+            if (category === 'all' || postCategory === category.toLowerCase()) {
+                card.style.display = 'block';
+                card.style.animation = 'fadeIn 0.3s ease-in';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    // Add CSS for fade-in animation if not already present
+    if (!document.querySelector('#fadeInStyles')) {
+        const style = document.createElement('style');
+        style.id = 'fadeInStyles';
+        style.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            .header.scrolled {
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(10px);
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    // Initialize any other interactive elements
+    initializeInteractiveElements();
+});
+
+function initializeInteractiveElements() {
+    // Add hover effects to cards
+    const cards = document.querySelectorAll('.post-card, .feature-card');
+    cards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-5px)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+        });
+    });
+
+    // Add copy-to-clipboard functionality for code blocks
+    const codeBlocks = document.querySelectorAll('pre code');
+    codeBlocks.forEach(block => {
+        const button = document.createElement('button');
+        button.className = 'copy-button';
+        button.textContent = 'Copy';
+        button.style.cssText = `
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        `;
+        
+        const pre = block.parentElement;
+        if (pre.tagName === 'PRE') {
+            pre.style.position = 'relative';
+            pre.appendChild(button);
+            
+            button.addEventListener('click', function() {
+                navigator.clipboard.writeText(block.textContent).then(() => {
+                    button.textContent = 'Copied!';
+                    setTimeout(() => {
+                        button.textContent = 'Copy';
+                    }, 2000);
+                });
+            });
+        }
+    });
+}
