@@ -17,6 +17,7 @@
             grid-template-columns: 1fr 1fr;
             gap: 2rem;
             min-height: calc(100vh - 140px);
+            align-items: start;
         }
 
         .editor-panel, .preview-panel {
@@ -25,6 +26,7 @@
             padding: 2rem;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             border: 1px solid #e2e8f0;
+            height: fit-content;
         }
 
         .panel-title {
@@ -56,6 +58,7 @@
             border-radius: 8px;
             font-size: 1rem;
             transition: border-color 0.3s ease;
+            box-sizing: border-box;
         }
 
         .form-group input:focus,
@@ -66,7 +69,7 @@
         }
 
         .form-group textarea {
-            min-height: 300px;
+            min-height: 200px;
             font-family: 'Monaco', 'Consolas', monospace;
             resize: vertical;
         }
@@ -87,6 +90,7 @@
             cursor: pointer;
             transition: background 0.3s ease;
             margin-right: 1rem;
+            margin-bottom: 0.5rem;
         }
 
         .btn:hover {
@@ -113,8 +117,9 @@
             border: 1px solid #e2e8f0;
             border-radius: 8px;
             padding: 1.5rem;
-            min-height: 400px;
+            min-height: 200px;
             background: #fafafa;
+            margin-bottom: 1rem;
         }
 
         .preview-content h1 {
@@ -172,31 +177,15 @@
             font-size: 0.9rem;
         }
 
-        .preview-content pre {
-            background: #1e293b;
-            color: #e2e8f0;
-            padding: 1rem;
-            border-radius: 8px;
-            overflow-x: auto;
-            margin: 1rem 0;
-        }
-
-        .preview-content pre code {
-            background: none;
-            color: inherit;
-            padding: 0;
-        }
-
         .code-output {
             background: #1e293b;
             color: #e2e8f0;
             padding: 1rem;
             border-radius: 8px;
             font-family: 'Monaco', 'Consolas', monospace;
-            font-size: 0.9rem;
-            max-height: 400px;
+            font-size: 0.8rem;
+            max-height: 300px;
             overflow-y: auto;
-            margin-top: 1rem;
             white-space: pre-wrap;
             word-break: break-all;
         }
@@ -256,9 +245,6 @@
                     </li>
                     <li class="nav-item">
                         <a href="/about.html" class="nav-link">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/admin.html" class="nav-link active">Editor</a>
                     </li>
                 </ul>
                 <div class="hamburger">
@@ -329,13 +315,14 @@
                 </form>
 
                 <div class="success-message" id="successMessage">
-                    ✅ HTML generated successfully! Copy the code from the right panel and save it as a new file.
+                    ✅ HTML generated successfully! The code is in the right panel - scroll down to see it.
                 </div>
             </div>
 
             <!-- Preview Panel -->
             <div class="preview-panel">
-                <h2 class="panel-title">👀 Live Preview</h2>
+                <h2 class="panel-title">👀 Live Preview & HTML Output</h2>
+                
                 <div class="preview-content" id="previewContent">
                     <p style="color: #94a3b8; text-align: center; padding: 2rem;">
                         Fill out the form and click "Preview Post" to see how your blog post will look.
@@ -343,7 +330,7 @@
                 </div>
 
                 <div id="htmlOutput" style="display: none;">
-                    <h3 style="margin-top: 2rem; margin-bottom: 1rem; color: #1e293b;">Generated HTML:</h3>
+                    <h3 style="margin-top: 2rem; margin-bottom: 1rem; color: #1e293b;">Generated HTML Code:</h3>
                     <button class="btn btn-secondary" onclick="copyHTML()">📋 Copy HTML</button>
                     <div class="code-output" id="generatedHTML"></div>
                 </div>
@@ -421,11 +408,16 @@
             const category = document.getElementById('postCategory').value;
             const date = document.getElementById('postDate').value;
 
+            if (!title || !content) {
+                alert('Please enter a title and content to preview');
+                return;
+            }
+
             const htmlContent = markdownToHTML(content);
             
             const previewHTML = `
                 <div style="margin-bottom: 2rem;">
-                    <span style="background: #2563eb; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.875rem; font-weight: 500;">${category}</span>
+                    <span style="background: #2563eb; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.875rem; font-weight: 500;">${category || 'Category'}</span>
                     <span style="color: #64748b; margin-left: 1rem;">${new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}</span>
                 </div>
                 <h1>${title}</h1>
@@ -446,14 +438,25 @@
             };
 
             if (!formData.title || !formData.slug || !formData.category || !formData.content) {
-                alert('Please fill in all required fields');
+                alert('Please fill in all required fields (Title, Category, Slug, Content)');
                 return;
             }
 
             const htmlContent = markdownToHTML(formData.content);
             const dateFormatted = new Date(formData.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
 
-            const fullHTML = `<!DOCTYPE html>
+            const fullHTML = generateBlogPostHTML(formData, htmlContent, dateFormatted);
+
+            document.getElementById('generatedHTML').textContent = fullHTML;
+            document.getElementById('htmlOutput').style.display = 'block';
+            document.getElementById('successMessage').style.display = 'block';
+
+            // Scroll to the HTML output
+            document.getElementById('htmlOutput').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function generateBlogPostHTML(formData, htmlContent, dateFormatted) {
+            return `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -641,28 +644,20 @@
     <script src="../script.js"></script>
 </body>
 </html>`;
-
-            document.getElementById('generatedHTML').textContent = fullHTML;
-            document.getElementById('htmlOutput').style.display = 'block';
-            document.getElementById('successMessage').style.display = 'block';
-
-            // Also generate instructions
-            console.log(`
-🚀 DEPLOYMENT INSTRUCTIONS:
-
-1. Copy the generated HTML code
-2. Create a new file: blog/${formData.slug}.html
-3. Paste the HTML code into the file
-4. Update blog.html to include this new post
-5. Commit and push to GitHub
-
-💡 TIP: Save this as blog/${formData.slug}.html
-            `);
         }
 
         function copyHTML() {
             const htmlContent = document.getElementById('generatedHTML').textContent;
             navigator.clipboard.writeText(htmlContent).then(() => {
+                alert('HTML copied to clipboard! 📋\\n\\nNext steps:\\n1. Create a new file: blog/' + document.getElementById('postSlug').value + '.html\\n2. Paste this code into the file\\n3. Commit and push to GitHub');
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = htmlContent;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
                 alert('HTML copied to clipboard! 📋');
             });
         }
@@ -674,6 +669,11 @@
                 document.getElementById('previewContent').innerHTML = '<p style="color: #94a3b8; text-align: center; padding: 2rem;">Fill out the form and click "Preview Post" to see how your blog post will look.</p>';
                 document.getElementById('htmlOutput').style.display = 'none';
                 document.getElementById('successMessage').style.display = 'none';
+                // Clear localStorage
+                const formInputs = ['postTitle', 'postCategory', 'postSlug', 'postDate', 'postExcerpt', 'postContent'];
+                formInputs.forEach(inputId => {
+                    localStorage.removeItem(`blog_editor_${inputId}`);
+                });
             }
         }
 
@@ -685,7 +685,7 @@
             
             // Load saved content
             const saved = localStorage.getItem(`blog_editor_${inputId}`);
-            if (saved) {
+            if (saved && saved !== '') {
                 input.value = saved;
             }
             
@@ -694,6 +694,15 @@
                 localStorage.setItem(`blog_editor_${inputId}`, input.value);
             });
         });
+
+        // Load any saved content on page load
+        window.addEventListener('load', () => {
+            // Auto-generate slug if title is loaded from localStorage
+            const titleInput = document.getElementById('postTitle');
+            if (titleInput.value) {
+                titleInput.dispatchEvent(new Event('input'));
+            }
+        });
     </script>
 </body>
-</html>
+</html> 
