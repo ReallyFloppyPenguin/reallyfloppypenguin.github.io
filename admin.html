@@ -263,6 +263,7 @@
                 <h2 class="panel-title">📝 Create New Blog Post</h2>
                 
                 <form id="postForm">
+                    <button type="submit" style="display: none;" aria-hidden="true">Submit</button>
                     <div class="form-row">
                         <div class="form-group">
                             <label for="postTitle">Post Title</label>
@@ -302,7 +303,7 @@
                         <div class="markdown-help">
                             <h4>Markdown Quick Reference:</h4>
                             <code># Heading 1</code> | <code>## Heading 2</code> | <code>**bold**</code> | <code>*italic*</code> | <code>`code`</code><br>
-                            <code>> blockquote</code> | <code>- list item</code> | <code>[link](url)</code> | <code>```code block```</code>
+                            <code>&gt; blockquote</code> | <code>- list item</code> | <code>[link](url)</code> | <code>```code block```</code>
                         </div>
                         <textarea id="postContent" name="content" placeholder="Write your blog post content here using Markdown..." required></textarea>
                     </div>
@@ -321,7 +322,7 @@
 
             <!-- Preview Panel -->
             <div class="preview-panel">
-                <h2 class="panel-title">👀 Live Preview & HTML Output</h2>
+                <h2 class="panel-title">👀 Live Preview &amp; HTML Output</h2>
                 
                 <div class="preview-content" id="previewContent">
                     <p style="color: #94a3b8; text-align: center; padding: 2rem;">
@@ -331,7 +332,7 @@
 
                 <div id="htmlOutput" style="display: none;">
                     <h3 style="margin-top: 2rem; margin-bottom: 1rem; color: #1e293b;">Generated HTML Code:</h3>
-                    <button class="btn btn-secondary" onclick="copyHTML()">📋 Copy HTML</button>
+                    <button type="button" class="btn btn-secondary" onclick="copyHTML()">📋 Copy HTML</button>
                     <div class="code-output" id="generatedHTML"></div>
                 </div>
             </div>
@@ -341,7 +342,7 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <p>&copy; 2025 Gurvaah's Blog. All rights reserved.</p>
+                <p>(C) 2025 Gurvaah's Blog. All rights reserved.</p>
                 <div class="footer-links">
                     <a href="/blog.html">Blog</a>
                     <a href="/about.html">About</a>
@@ -631,7 +632,7 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <p>&copy; 2025 Gurvaah's Blog. All rights reserved.</p>
+                <p>(C) 2025 Gurvaah's Blog. All rights reserved.</p>
                 <div class="footer-links">
                     <a href="/blog.html">Blog</a>
                     <a href="/about.html">About</a>
@@ -641,7 +642,7 @@
         </div>
     </footer>
 
-    <script src="../script.js"></script>
+    <script src="../script.js"><\/script>
 </body>
 </html>`;
         }
