@@ -6,9 +6,3 @@ body {
     min-height: 100vh;
     background-color: #333; /* Dark background for the page */
 }
-
-canvas {
-    border: 1px solid black;
-    background-color: black; /* Game background */
-    display: block; /* Prevents extra space below canvas */
-}
